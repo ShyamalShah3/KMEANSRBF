@@ -19,7 +19,7 @@ LR = [0.01, 0.02]
 
 def generate_inputs():
     x = np.random.uniform(low=0.0, high=1.0, size=(TOTAL_POINTS,)) # getting x values in [0.0, 1.0]
-    x.sort(axis=0)
+    x.sort(axis=ZERO)
     noise = np.random.uniform(low=-0.1, high=0.1, size=(TOTAL_POINTS,)) # getting noise values in [-0.1, 0.1]
     y = (P5 + (P4*np.cos((x*np.pi*T5))))+noise # getting outputs
     y_actual = (P5 + (P4*np.cos((x*np.pi*T5))))
