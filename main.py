@@ -140,7 +140,7 @@ def predict(X, y, bases, learning_rate, y_act, same_var=False): # prediction for
 
 if __name__ == '__main__': # all tested parameter values
     x,y, y_actual = generate_inputs()
-    for a in VARIANCE:
+    for v in VARIANCE:
         for b in BASES:
             for lr in LR:
-                predict(x, y, b, lr, y_actual, a)
+                predict(x, y, b, lr, y_actual, v)
