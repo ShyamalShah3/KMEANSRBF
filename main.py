@@ -6,6 +6,8 @@ ZERO = 0
 TOTAL_POINTS = 100
 ONE = 1
 NEGONE = -1
+ONEHUNDRED = 100
+CONVERGENCE_THRESHOLD = 1e-4
 TWO = 2
 T5 = 2.5
 P4 = 0.4
@@ -53,18 +55,18 @@ def kmeans(X, k, same_var=False):
 
     while not done:
         distances = np.squeeze(np.abs(X[:, np.newaxis] - clusters[np.newaxis, :])) # distance of each point to each cluster
-        closestCluster = np.argmin(distances, axis=1) # closest cluster for each point
+        closestCluster = np.argmin(distances, axis=ONE) # closest cluster for each point
 
         for i in range(k):
             points = X[closestCluster == i] # points in cluster i
-            if len(points) > 0:
-                clusters[i] = np.mean(points, axis=0)
+            if len(points) > ZERO:
+                clusters[i] = np.mean(points, axis=ZERO)
 
-        done = np.linalg.norm(clusters - old_clusters) < 1e-4 # see if clusters have changed
+        done = np.linalg.norm(clusters - old_clusters) < CONVERGENCE_THRESHOLD # see if clusters have changed
         old_clusters = clusters.copy()
 
     distances = np.squeeze(np.abs(X[:, np.newaxis] - clusters[np.newaxis, :]))  # distance of each point to each cluster
-    closestCluster = np.argmin(distances, axis=1)  # closest cluster for each point
+    closestCluster = np.argmin(distances, axis=ONE)  # closest cluster for each point
 
     if not same_var: # must calculate variance of each cluster
         variances = diff_var(X, k, closestCluster)
@@ -80,7 +82,7 @@ def gaussian_rbf(x, cluster_center, variance):
 
 
 class RBF(object):
-    def __init__(self, bases, learning_rate, same_var, epochs=100, gaus_rbf=gaussian_rbf):
+    def __init__(self, bases, learning_rate, same_var, epochs=ONEHUNDRED, gaus_rbf=gaussian_rbf):
         self.bases = bases
         self.learning_rate = learning_rate
         self.epochs = epochs
@@ -99,7 +101,7 @@ class RBF(object):
 
 
                 loss = (y[j] - f).flatten()**TWO
-                print('Epoch {} Loss: {}'.format(i+1, loss[ZERO]))
+                print('Epoch {} Loss: {}'.format(i+ONE, loss[ZERO]))
 
                 # backward pass
                 error = -(y[j] - f).flatten()
