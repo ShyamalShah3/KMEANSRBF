@@ -9,7 +9,7 @@ Project Dependencies:
     You must have numpy installed.
         To install, type 'pip install numpy' in your terminal
     You must have matplotlib installed.
-        To install, type 'pip install matplotlib'
+        To install, type 'pip install matplotlib' in your terminal
 
 Run Instructions:
     main.py:
