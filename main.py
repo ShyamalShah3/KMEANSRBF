@@ -89,7 +89,7 @@ class RBF(object):
         self.weights = np.random.randn(bases)
         self.bias = np.random.randn(ONE)
 
-    def fit(self, X, y):
+    def fit(self, X, y): # does all training
         self.clusters, self.variances = kmeans(X, self.bases, self.same_var)
         for i in range(self.epochs):
             for j in range(X.shape[ZERO]):
@@ -109,7 +109,7 @@ class RBF(object):
                 self.weights = self.weights - (self.learning_rate*x_rbf*error)
                 self.bias = self.bias - (self.learning_rate*error)
 
-    def predictions(self, X):
+    def predictions(self, X): # predictions. Use after training using the 'fit' function.
         y_pred = []
         for j in range(X.shape[ZERO]):
             x_rbf = np.array([self.gaus_rbf(X[j], center, var) for center, var in zip(self.clusters, self.variances)])
@@ -118,7 +118,7 @@ class RBF(object):
         return np.array(y_pred)
 
 
-def plot(X, y, y_pred, bases, learning_rate, same_var, y_act):
+def plot(X, y, y_pred, bases, learning_rate, same_var, y_act): # for plotting results
     tt = 'Different' if not same_var else 'Same'
     title_text = '{} Variance. Bases = {}. Learning Rate = {}'.format(tt, bases, learning_rate)
     plt.plot(X, y, '-o', label='Data with noise')
@@ -129,15 +129,14 @@ def plot(X, y, y_pred, bases, learning_rate, same_var, y_act):
     plt.show()
 
 
-def predict(X, y, bases, learning_rate, y_act, same_var=False):
+def predict(X, y, bases, learning_rate, y_act, same_var=False): # prediction for specific parameter values
     rbf = RBF(bases, learning_rate, same_var=same_var)
     rbf.fit(X, y)
     y_pred = rbf.predictions(X)
     plot(X, y, y_pred, bases, learning_rate, same_var, y_act)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
+if __name__ == '__main__': # all tested parameter values
     x,y, y_actual = generate_inputs()
     for a in VARIANCE:
         for b in BASES:
